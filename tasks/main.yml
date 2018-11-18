@@ -1,0 +1,20 @@
+---
+# tasks file for ansible-role-win-domain-member
+- name: DNS Client
+  win_dns_client:
+    adapter_names: "{{ dns_client_adapter }}"
+    ipv4_addresses: "{{ dns_client_dns_server_ip }}"
+  when: dns_client_configure
+
+- name: Domain Member
+  win_domain_membership:
+    dns_domain_name: "{{ dns_domain_name }}"
+    hostname: "{{ hostname }}"
+    domain_admin_user: "{{ domain_admin_user }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    state: domain
+  register: domain_state
+
+- name: Reboot when Domain Member requires it
+  win_reboot:
+  when: domain_state.reboot_required

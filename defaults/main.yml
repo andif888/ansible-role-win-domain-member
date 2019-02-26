@@ -2,6 +2,7 @@
 # defaults file for ansible-role-win-domain-member
 dns_domain_name: domain.local
 hostname: memberpc
+domain_ou_path: CN=Computers,DC=domain,DC=local
 domain_admin_user: administrator@domain.local
 domain_admin_password: vagrant
 dns_client_configure: False

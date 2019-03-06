@@ -14,7 +14,7 @@
     domain_admin_password: "{{ domain_admin_password }}"
     domain_ou_path: "{{ domain_ou_path }}"
     state: domain
-  register: domain_state
+  register: domain_state_ou
   when: domain_ou_path is defined
 
 - name: Domain Member
@@ -29,4 +29,12 @@
 
 - name: Reboot when Domain Member requires it
   win_reboot:
-  when: domain_state.reboot_required
+  when:
+    - domain_ou_path is undefined 
+    - domain_state.reboot_required
+
+- name: Reboot (OU) when Domain Member requires it
+  win_reboot:
+  when: 
+    - domain_ou_path is defined
+    - domain_state_ou.reboot_required

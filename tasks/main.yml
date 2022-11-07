@@ -6,7 +6,7 @@
     ipv4_addresses: "{{ dns_client_dns_server_ip }}"
   when: dns_client_configure
 
-- name: Domain Member
+- name: Domain Member into OU
   win_domain_membership:
     dns_domain_name: "{{ dns_domain_name }}"
     hostname: "{{ hostname }}"
@@ -15,7 +15,9 @@
     domain_ou_path: "{{ domain_ou_path }}"
     state: domain
   register: domain_state_ou
-  when: domain_ou_path is defined
+  when:
+    - domain_join_oupath is defined
+    - domain_join_oupath | length > 0
 
 - name: Domain Member
   win_domain_membership:
@@ -25,16 +27,18 @@
     domain_admin_password: "{{ domain_admin_password }}"
     state: domain
   register: domain_state
-  when: domain_ou_path is undefined
+  when:
+    - (domain_join_oupath is undefined) or (domain_join_oupath | length == 0)
 
 - name: Reboot when Domain Member requires it
   win_reboot:
   when:
-    - domain_ou_path is undefined 
+    - (domain_join_oupath is undefined) or (domain_join_oupath | length == 0)    
     - domain_state.reboot_required
 
 - name: Reboot (OU) when Domain Member requires it
   win_reboot:
   when: 
-    - domain_ou_path is defined
+    - domain_join_oupath is defined
+    - domain_join_oupath | length > 0
     - domain_state_ou.reboot_required

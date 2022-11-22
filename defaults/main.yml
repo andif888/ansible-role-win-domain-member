@@ -1,9 +1,23 @@
 ---
 # defaults file for ansible-role-win-domain-member
+
+# @var dns_domain_name:description: AD Domain to join
 dns_domain_name: domain.local
-hostname: memberpc
+
+# @var hostname:description: Name to change the hostname to
+hostname: '{{ inventory_hostname }}'
+
+# @var domain_admin_user:description: AD account with permission to join to domain
 domain_admin_user: administrator@domain.local
+
+# @var domain_admin_password:description: AD account's password with permission to join to domain
 domain_admin_password: vagrant
+
+# @var dns_client_configure:description: Re-configure DNS settings of network adapter before domain join 
 dns_client_configure: False
+
+# @var dns_client_adapter:description: Name of the network adapter for which DNS settings should be changed
 dns_client_adapter: Ethernet
+
+# @var dns_client_dns_server_ip:description: DNS Server IP
 dns_client_dns_server_ip: 192.168.2.1

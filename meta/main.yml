@@ -1,6 +1,10 @@
+# @meta description: >
+# Ansible Role to a Windows to an AD Domain
+# @end
+# @meta author: andif888
 galaxy_info:
   author: your name
-  description: your description
+  description: Ansible Role to a Windows to an AD Domain
   company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -16,7 +20,7 @@ galaxy_info:
   # - CC-BY
   license: license (GPLv2, CC-BY, etc)
 
-  min_ansible_version: 1.2
+  min_ansible_version: "1.2"
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:

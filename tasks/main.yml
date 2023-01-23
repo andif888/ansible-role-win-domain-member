@@ -12,7 +12,7 @@
     hostname: "{{ hostname }}"
     domain_admin_user: "{{ domain_admin_user }}"
     domain_admin_password: "{{ domain_admin_password }}"
-    domain_ou_path: "{{ domain_ou_path }}"
+    domain_ou_path: "{{ domain_join_oupath }}"
     state: domain
   register: domain_state_ou
   when:

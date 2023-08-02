@@ -15,6 +15,8 @@
     domain_ou_path: "{{ domain_join_oupath }}"
     state: domain
   register: domain_state_ou
+  async: 60
+  poll: 5
   when:
     - domain_join_oupath is defined
     - domain_join_oupath | length > 0
@@ -27,6 +29,8 @@
     domain_admin_password: "{{ domain_admin_password }}"
     state: domain
   register: domain_state
+  async: 60
+  poll: 5
   when:
     - (domain_join_oupath is undefined) or (domain_join_oupath | length == 0)
 

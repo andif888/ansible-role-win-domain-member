@@ -21,3 +21,4 @@ dns_client_adapter: Ethernet
 
 # @var dns_client_dns_server_ip:description: DNS Server IP
 dns_client_dns_server_ip: 192.168.2.1
+...

@@ -1,13 +1,13 @@
 ---
 # tasks file for ansible-role-win-domain-member
 - name: DNS Client
-  win_dns_client:
+  ansible.windows.win_dns_client:
     adapter_names: "{{ dns_client_adapter }}"
-    ipv4_addresses: "{{ dns_client_dns_server_ip }}"
+    dns_servers: "{{ dns_client_dns_server_ip }}"
   when: dns_client_configure
 
 - name: Domain Member into OU
-  win_domain_membership:
+  microsoft.ad.membership:
     dns_domain_name: "{{ dns_domain_name }}"
     hostname: "{{ hostname }}"
     domain_admin_user: "{{ domain_admin_user }}"
@@ -22,7 +22,7 @@
     - domain_join_oupath | length > 0
 
 - name: Domain Member
-  win_domain_membership:
+  microsoft.ad.membership:
     dns_domain_name: "{{ dns_domain_name }}"
     hostname: "{{ hostname }}"
     domain_admin_user: "{{ domain_admin_user }}"
@@ -35,14 +35,16 @@
     - (domain_join_oupath is undefined) or (domain_join_oupath | length == 0)
 
 - name: Reboot when Domain Member requires it
-  win_reboot:
+  ansible.windows.win_reboot:
   when:
     - (domain_join_oupath is undefined) or (domain_join_oupath | length == 0)    
     - domain_state.reboot_required
 
 - name: Reboot (OU) when Domain Member requires it
-  win_reboot:
+  ansible.windows.win_reboot:
   when: 
     - domain_join_oupath is defined
     - domain_join_oupath | length > 0
     - domain_state_ou.reboot_required
+...
+
